@@ -1,205 +1,161 @@
-# 热力学第一定律与物性评估（Thermodynamics I - Lecture 3）
+# 工程热力学：纯物质性质与闭口系统能量分析复习笔记
 
 ---
 
-## 模块一：状态原理与系统分类
+## 一、 核心状态参数（Properties）
 
-### 1.1 什么是状态？
-在热力学中，**状态（State）**是系统在某一瞬间所表现出的宏观物理状况。只要状态确定，该状态下的所有宏观热力学性质（如压力 $p$、温度 $T$、比容 $v$、内能 $u$、比焓 $h$ 等）都是唯一确定的。
+> **符号规范**：大写字母代表总体的广延量（Extensive），小写字母代表单位质量（$1\text{ kg}$）的强度量/比参数（Specific property）。
 
-### 1.2 状态原理（State Principle）
-* **核心内容**：一个系统的稳定平衡状态，由它的**所有准静态功参数（Quasi-static work parameters）**和**能量（Energy, $E$）**唯一确定。
-* **准静态功模式示例**：
-  * **高空气球系统**：
-    * 克服重力高度变化做功 $\rightarrow$ 功参数为高度 $h$
-    * 膨胀做容积功 $\rightarrow$ 功参数为体积 $V$
-    * 确定状态所需独立参数：$E$、$V$、$h$ 共 3 个
-
-### 1.3 简单系统与简单可压缩系统
-* **简单系统（Simple System）**：仅有 **1 种** 相关的准静态功作用模式的系统，只需 **2 个独立状态参数** 即可完全确定其状态。
-* **简单可压缩系统（Simple Compressible System）**：
-  * 工程热力学中最常见的工质模型（如活塞缸内的纯气体或液体）。
-  * 唯一的准静态功模式为**容积胀缩功**（$p\text{d}V$ 功）。
-  * **确定状态所需独立参数**：恰好 **2 个**（例如 $V$ 与 $E$，或强度性质组合 $p$ 与 $T$）。
-  * 状态方程通式：
-    $$f(p, T, v) = 0 \quad \text{（例如理想气体：} pv = RT \text{）}$$
-
-> **注意：参数的独立性判定**
-> 选取的两个参数必须相互独立。例如，对于定质量闭口系统，密度 $\rho$ 与比容 $v$ 存在 $\rho = 1/v$，两者互不独立，不能作为确定状态的两个独立变量。
+1. **压力 $P$（Pressure）**
+   * **常用单位换算**：
+     $$1\text{ bar} = 100\text{ kPa} = 0.1\text{ MPa}$$
+     $$1\text{ MPa} = 1000\text{ kPa}$$
+   * **计算准则**：计算功时统一将压力化为 $\text{kPa}$，体积化为 $\text{m}^3$，乘积直接为千焦（$1\text{ kPa}\cdot\text{m}^3 = 1\text{ kJ}$）。
+2. **温度 $T$（Temperature）**
+   * 常用单位：$^\circ\text{C}$ 或 $\text{K}$（$T(\text{K}) = T(^\circ\text{C}) + 273.15$）。
+3. **比容 $v$（Specific Volume）**
+   * 定义：单位质量物质所占的体积（密度 $\rho$ 的倒数）。
+     $$v = \frac{V}{m} \quad (\text{m}^3/\text{kg})$$
+4. **比内能 $u$（Specific Internal Energy）**
+   * 定义：单位质量物质内部微观分子动能与势能之和（$\text{kJ/kg}$）。
+   * 总内能：$$U = m u \quad (\text{kJ})$$
+5. **比焓 $h$（Specific Enthalpy）**
+   * 定义：为简化定压与流动过程计算而定义的组合状态参数。
+     $$h = u + P v \quad (\text{kJ/kg})$$
+   * 总焓：$$H = m h = U + P V \quad (\text{kJ})$$
 
 ---
 
-## 模块二：基本热力学过程与物性参数（$u, h, c_v, c_p$）
+## 二、 纯物质相变过程与 $P-v$ 相图（Vapor Dome）
 
-由热力学第一定律闭口系能量方程：
-$$\Delta U = Q - W$$
+真实工质（如水/水蒸气）存在相变，**严禁使用理想气体状态方程 $PV = mRT$**，一切参数需查水蒸气表（Steam Tables）。
 
-### 2.1 定容过程（Isochoric Process，$V = \text{常数}$）
-* **物理过程**：容器刚性闭合或活塞被销钉（Pin）卡死，体积不变，容积做功 $W = 0$。
-  $$\Delta U = Q$$
-* **比内能（Specific Internal Energy, $u$）**：
-  $u = u(T, v)$，对其全微分得：
-  $$\text{d}u = \left(\frac{\partial u}{\partial T}\right)_v \text{d}T + \left(\frac{\partial u}{\partial v}\right)_T \text{d}v$$
-* **定容比热容（Specific Heat at Constant Volume, $c_v$）**：
-  * **定义式**：
-    $$c_v = \left(\frac{\partial u}{\partial T}\right)_v \quad [\text{kJ/(kg}\cdot\text{K)}]$$
-  * **物理意义**：单位质量工质在定容条件下升高 $1\text{ K}$ 所需吸收的热量。
-  * **定容过程内能变化计算**：
-    $$\Delta u = \int_{1}^{2} c_v \text{d}T$$
-
-### 2.2 定压过程（Isobaric Process，$p = \text{常数}$）与焓的引入
-* **物理过程**：活塞受恒定外压自由移动，系统吸热升温的同时发生膨胀对外做容积功 $W = p\Delta V$：
-  $$\Delta U = Q - p\Delta V \implies Q = \Delta U + p\Delta V = \Delta(U + pV)$$
-* **比焓（Specific Enthalpy, $h$）的定义**：
-  为简化包含膨胀功和流动流动功的能量计算，定义新状态函数焓 $H$ 与比焓 $h$：
-  $$H = U + pV \quad [\text{kJ}]$$
-  $$h = u + pv \quad [\text{kJ/kg}]$$
-* **定压比热容（Specific Heat at Constant Pressure, $c_p$）**：
-  * 取 $h = h(T, p)$，对其全微分：
-    $$\text{d}h = \left(\frac{\partial h}{\partial T}\right)_p \text{d}T + \left(\frac{\partial h}{\partial p}\right)_T \text{d}p$$
-  * **定义式**：
-    $$c_p = \left(\frac{\partial h}{\partial T}\right)_p \quad [\text{kJ/(kg}\cdot\text{K)}]$$
-  * **定压过程焓变计算**：
-    $$\Delta h = \int_{1}^{2} c_p \text{d}T$$
-
----
-
-## 模块三：纯物质相变与状态区域划分
-
-### 3.1 基本概念
-* **纯物质（Pure Substance）**：化学组成在全系统内完全均匀且恒定的物质（如纯水、冰水共存体系、未发生化学反应的均相空气）。
-* **相（Phase）**：物理结构与化学组成均一的聚集状态（固相、液相、气相）。
-
-### 3.2 纯物质加热相变全过程（$T-v$ 图）
-恒压下对工质持续加热，经历五个典型阶段：
-
-```
-[过冷液体]  -->  [饱和液体]  -->  [汽液两相共存区]  -->  [饱和蒸汽]  -->  [过热蒸汽]
- (T < Tsat)      (x = 0)        (T = Tsat, 沸腾)      (x = 1)       (T > Tsat)
+```text
+  P (压力)
+  ^
+  |               [临界点 Critical Point]
+  |                      /\
+  |                     /  \
+  |   (压缩液体区)      /    \       (过热蒸汽区)
+  |                   /      \
+P_sat ---------------B--------C---------> D  (定压加热线)
+  |                 /|   湿   |\
+  |      A---------/ | 蒸汽区 | \
+  |               /  | (水+汽)|  \
+  +--------------+---+--------+---+---------> v (比容 m³/kg)
+                 vf           vg
 ```
 
+### 1. 五个关键状态与三个相区
+* **压缩液体 / 过冷水（Compressed / Subcooled Liquid，点 A）**：温度低于当前压力下的沸点（$T < T_{\text{sat}}$），或压力高于当前温度下的饱和压力（$P > P_{\text{sat}}$）。水分完全为液态，极难压缩。
+* **饱和液体（Saturated Liquid，点 B，下标 $f$）**：刚达到沸点、即将产生第一颗气泡的极限液态（干度 $x = 0$）。参数记为 $v_f, u_f, h_f, s_f$。
+* **湿蒸汽区 / 汽液两相区（Wet Vapor / Two-phase Mixture，线段 B–C）**：沸腾相变进行中，水与蒸汽共存。**在定压条件下，相变过程温度保持不变（$T = T_{\text{sat}}$）**。
+* **干饱和蒸汽（Saturated Vapor，点 C，下标 $g$）**：最后一滴水刚好完全汽化的极限气态（干度 $x = 1$）。参数记为 $v_g, u_g, h_g, s_g$。
+* **过热蒸汽（Superheated Vapor，点 D）**：温度高于沸点（$T > T_{\text{sat}}$）的纯蒸汽。
 
-1. **过冷水 / 压缩液体（Subcooled / Compressed Liquid）**：
-   * 实际温度低于该压力下的饱和温度（沸点）：$T < T_{\text{sat}}(p)$。
-2. **两相混合区（Liquid-Vapor Mixture）**：
-   * 液体与气体处于动态平衡共存，相变过程等温等压。
-   * **关键特性**：在两相区内，**压力 $p$ 与温度 $T$ 完全锁定对应，不再是两个相互独立的变量**。不能仅用 $(p, T)$ 确定状态。
-3. **过热蒸汽（Superheated Vapor）**：
-   * 液体完全汽化后继续吸热，实际温度高于该压力下的饱和温度：$T > T_{\text{sat}}(p)$。
-4. **临界点（Critical Point）**：
-   * 气相与液相能够平衡共存的最高温度 $T_c$ 与最高压力 $p_c$。高于临界温度时，物质不能通过等温压缩而液化。
-
-### 3.3 干度（Quality, $x$）及杠杆法则
-* **干度定义**：汽液两相区中，**饱和气体的质量占两相总质量的百分比**：
-  $$x = \frac{m_{\text{vapor}}}{m_{\text{total}}} = \frac{m_g}{m_f + m_g} \quad (0 \le x \le 1)$$
-  * $x = 0$：全部为饱和液体（点 $f$）
-  * $x = 1$：全部为饱和干蒸汽（点 $g$）
-* **两相区混合物性质通式（杠杆法则）**：
-  若 $\Pi$ 代表比容 $v$、比内能 $u$、比焓 $h$ 或比熵 $s$：
-  $$\Pi = (1 - x)\Pi_f + x\Pi_g = \Pi_f + x(\Pi_g - \Pi_f) = \Pi_f + x\Pi_{fg}$$
-  * 展开式例：
-    * $v = v_f + x v_{fg} = v_f + x(v_g - v_f)$
-    * $u = u_f + x u_{fg} = u_f + x(u_g - u_f)$
-    * $h = h_f + x h_{fg} = h_f + x(h_g - h_f)$
+### 2. 饱和钟形线（Vapor Dome）的构成
+* **左边界（饱和液体线）**：不同压力下 $v_f$ 点的连线。
+* **右边界（饱和蒸汽线）**：不同压力下 $v_g$ 点的连线。
+* **临界点（Critical Point）**：左右边界在顶部交汇点（水：$P_c = 22.06\text{ MPa}, T_c = 373.95^\circ\text{C}$），此处 $v_f = v_g$。
 
 ---
 
-## 模块四：热力学性质查表方法与工程计算技能
+## 三、 干度计算与状态定位法则
 
-### 4.1 水蒸气表结构及标识规范
-* 表 A.1.1 / A.1.2：**饱和蒸汽表**（以温度 $T$ 或压力 $p$ 为入口索引）
-  * 下标 $f$（Fluid）：饱和液体状态
-  * 下标 $g$（Gas）：饱和蒸汽状态
-  * 下标 $fg$：汽化变化量（$\Pi_{fg} = \Pi_g - \Pi_f$）
-* 表 A.1.3：**过热蒸汽表**（以 $p$ 和 $T$ 共同作为入口索引）
-* 表 A.1.4：**压缩液体表**
+### 1. 干度 $x$（Quality）与杠杆公式
+仅适用于**湿蒸汽两相区（拱门内部，$0 \le x \le 1$）**：
+$$x = \frac{m_{\text{vapor}}}{m_{\text{total}}} = \frac{m_g}{m_f + m_g}$$
 
-### 4.2 状态判定工作流
-已知某状态的压力 $p$ 和温度 $T$ 时：
-1. 查饱和表得到该压力下的饱和温度 $T_{\text{sat}}(p)$：
-   * 若 $T < T_{\text{sat}}$：**压缩液体**
-   * 若 $T = T_{\text{sat}}$：**饱和两相混合物**（需配合 $v$、$h$ 或 $x$ 进一步确定）
-   * 若 $T > T_{\text{sat}}$：**过热蒸汽**（直接查 Table A.1.3）
-2. 若已知 $p$ 与比容 $v$（或比焓 $h$）：
-   * 查对应压力下的 $v_f$ 和 $v_g$：
-     * $v < v_f$：压缩液体
-     * $v_f \le v \le v_g$：两相混合物，反求干度 $x = \frac{v - v_f}{v_{fg}}$
-     * $v > v_g$：过热蒸汽
+**两相区物性计算公式（加权平均）：**
+$$v = v_f + x (v_g - v_f) = v_f + x v_{fg} \implies x = \frac{v - v_f}{v_g - v_f}$$
+$$u = u_f + x (u_g - u_f) = u_f + x u_{fg}$$
+$$h = h_f + x (h_g - h_f) = h_f + x h_{fg}$$
+*(注：下标 $fg$ 代表汽化潜热/相变增量，即 $\phi_{fg} = \phi_g - \phi_f$)*。
 
-### 4.3 线性插值法（Linear Interpolation）
-当目标参数未在表格中直接列出时，利用相邻两点构成的斜率进行线性估算：
-$$\frac{\Pi - \Pi_L}{\Pi_H - \Pi_L} = \frac{T - T_L}{T_H - T_L}$$
-$$\Pi = \Pi_L + \left(\frac{T - T_L}{T_H - T_L}\right)(\Pi_H - \Pi_L)$$
-*(注：下标 $L$ 为表格低位节点，$H$ 为高位节点)*
+### 2. 状态定位速查表（已知任意 2 个独立参数确定相态）
 
-### 4.4 压缩液体的工程近似法
-由于水等液态物质可压缩性极小，压力对其体积和分子热运动影响微弱：
-* **比容与内能**：直接近似取该温度下的饱和水数值（仅取决于温度 $T$）：
-  $$v(T, p) \approx v_f(T)$$
-  $$u(T, p) \approx u_f(T)$$
-* **比焓（包含压力做功修正）**：
-  $$h(T, p) \approx u_f(T) + p v_f(T) \approx h_f(T) + v_f(T)\left[p - p_{\text{sat}}(T)\right]$$
-* **常温水物性经验常数**：
-  $$c_p \approx c_v \approx 4.2\text{ kJ/(kg}\cdot\text{K)}$$
-  $$\Delta u \approx \Delta h \approx 4.2 \times \Delta T\quad (T\text{ in }^\circ\text{C})$$
+| 已知 $(P, v)$ 判据 | 已知 $(P, T)$ 判据 | 所在相区 | 查表与取值方法 |
+| :--- | :--- | :--- | :--- |
+| $v < v_f$ | $T < T_{\text{sat}}$ 或 $P > P_{\text{sat}}$ | **压缩液体区** | 液体性质几乎不受压力影响，近似取**同温度 $T$** 下的饱和水参数：<br>$v \approx v_f(T),\quad u \approx u_f(T)$ |
+| $v = v_f$ | 题目指明“饱和液体” | **饱和液体线** | 直接查饱和表取 $v_f, u_f, h_f$（$x = 0$） |
+| $v_f < v < v_g$ | $T = T_{\text{sat}}$ | **湿蒸汽两相区** | 先由 $x = \frac{v - v_f}{v_g - v_f}$ 求干度，再代入杠杆公式算 $u, h$ |
+| $v = v_g$ | 题目指明“饱和蒸汽” | **饱和蒸汽线** | 直接查饱和表取 $v_g, u_g, h_g$（$x = 1$） |
+| $v > v_g$ | $T > T_{\text{sat}}$ 或 $P < P_{\text{sat}}$ | **过热蒸汽区** | 查**过热蒸汽表（Superheated Tables）**双重定位 $(P, T)$ |
 
 ---
 
-## 模块五：典型例题与工程计算示范
+## 四、 功、热量与热力学第一定律（闭口系统）
 
-### 例题 1：两相区干度与性质求解
-**【题目】**
-刚性密闭容器中盛有 $m = 5\text{ kg}$ 的水-汽混合物，温度为 $100^\circ\text{C}$。已知容器内气相体积为 $V_g = 3.3458\text{ m}^3$。
-查表 Table A.1.1 可得 $100^\circ\text{C}$ 下的饱和参数：
-* $p_{\text{sat}} = 101.325\text{ kPa}$
-* $v_f = 0.001044\text{ m}^3/\text{kg}$
-* $v_g = 1.6729\text{ m}^3/\text{kg}$
-* $u_f = 418.94\text{ kJ/kg}, \quad u_{fg} = 2087.6\text{ kJ/kg}$
+### 1. 常见的机械约束与过程转换
+* **自由浮动活塞（无卡阻）**：受力平衡 $P_{\text{内}} = P_{\text{atm}} + \frac{m_{\text{piston}}g}{A} = \text{常数} \implies$ **定压过程（Isobaric，$P = \text{const}$）**。
+* **活塞触碰限位块（Stops）或刚性容器（Rigid Tank）**：边界固定无法移动 $\implies$ **定容过程（Isochoric，$V = \text{const}$）**。
+* **绝热容器（Insulated）**：系统与外界无温差传热 $\implies$ **绝热过程（Adiabatic，$Q = 0$）**。
 
-求：
-1. 系统的干度 $x$；
-2. 混合物的平均比容 $v$ 和总内能 $U$。
+### 2. 功的计算（Work Interactions）
+1. **边界容积变化功（Boundary Work, $W_b$）**：
+   $$W_b = \int_{1}^{2} P \, dV$$
+   * **定容过程（$V = \text{const}$）**：
+     $$W_b = 0$$
+   * **定压过程（$P = \text{const}$）**：
+     $$W_b = P (V_2 - V_1) = m P (v_2 - v_1)$$
+   * **几何意义**：$P-V$ 图上过程曲线下方的投影面积（膨胀对外做功为正，压缩对内做功为负）。
+2. **轴功 / 搅拌功 / 电功（$W_{\text{shaft}}, W_{\text{mixer}}, W_{\text{elec}}$）**：
+   外部通过旋转轴或导线向系统单向输入的功，不可用 $\int P dV$ 计算，需由热力学第一定律求解。
 
-**【解答】**
-1. **计算蒸汽质量 $m_g$ 与干度 $x$**：
-   $$m_g = \frac{V_g}{v_g} = \frac{3.3458\text{ m}^3}{1.6729\text{ m}^3/\text{kg}} = 2.0\text{ kg}$$
-   系统总质量为 $5\text{ kg}$，故干度为：
-   $$x = \frac{m_g}{m} = \frac{2.0}{5.0} = 0.4$$
+### 3. 闭口系统热力学第一定律（能量守恒方程）
+**通用标准形式（规定吸热 $Q>0$，系统对外净输出功 $W_{\text{net,out}}>0$）：**
+$$Q - W_{\text{net,out}} = \Delta U = m (u_2 - u_1)$$
 
-2. **计算平均比容 $v$**：
-   $$v = v_f + x(v_g - v_f) = 0.001044 + 0.4 \times (1.6729 - 0.001044) \approx 0.6698\text{ m}^3/\text{kg}$$
-
-3. **计算比内能 $u$ 与总内能 $U$**：
-   $$u = u_f + x u_{fg} = 418.94 + 0.4 \times 2087.6 = 1253.98\text{ kJ/kg}$$
-   $$U = m \cdot u = 5.0\text{ kg} \times 1253.98\text{ kJ/kg} = 6269.9\text{ kJ}$$
-
----
-
-### 例题 2：线性插值应用
-**【题目】**
-已知过热蒸汽在压力 $p = 1.0\text{ MPa}$（$10\text{ bar}$）下：
-* $T_L = 200^\circ\text{C}$ 时，$v_L = 0.2060\text{ m}^3/\text{kg}$
-* $T_H = 240^\circ\text{C}$ 时，$v_H = 0.2275\text{ m}^3/\text{kg}$
-
-求 $T = 215^\circ\text{C}$ 时的比容 $v$。
-
-**【解答】**
-使用线性插值公式：
-$$\frac{v - v_L}{v_H - v_L} = \frac{T - T_L}{T_H - T_L}$$
-代入数据：
-$$\frac{v - 0.2060}{0.2275 - 0.2060} = \frac{215 - 200}{240 - 200} = \frac{15}{40} = 0.375$$
-$$v = 0.2060 + 0.375 \times (0.2275 - 0.2060) = 0.2060 + 0.00806 = 0.21406\text{ m}^3/\text{kg}$$
+**展开净功项（含边界输出功 $W_b$ 与搅拌输入功 $W_{\text{mixer,in}}$）：**
+$$Q - (W_b - W_{\text{mixer,in}}) = m (u_2 - u_1)$$
+* **定压过程特殊简化**：因 $W_b = P(V_2 - V_1)$，移项可得：
+  $$Q + W_{\text{mixer,in}} = \Delta U + P\Delta V = \Delta H = m (h_2 - h_1)$$
 
 ---
 
-### 例题 3：高压压缩液体近似计算
-**【题目】**
-水处于 $T = 100^\circ\text{C}$、$p = 5.0\text{ MPa}$（$5000\text{ kPa}$）的压缩液体状态。在无压缩液体表的情况下，利用饱和水参数估算其比焓 $h$，并与真实值进行比对。
-已知 $100^\circ\text{C}$ 饱和参数：$p_{\text{sat}} = 101.325\text{ kPa}$，$h_f = 419.05\text{ kJ/kg}$，$v_f = 0.001044\text{ m}^3/\text{kg}$；查 Table A.1.4 真实值 $h_{\text{exact}} = 422.73\text{ kJ/kg}$。
+## 五、 典型题型标准解题模板
 
-**【解答】**
-利用压缩液体比焓近似公式：
-$$h(T, p) \approx h_f(T) + v_f(T)\left[p - p_{\text{sat}}(T)\right]$$
-代入参数（注意压力单位必须与 $\text{kJ}$ 换算一致：$1\text{ kPa}\cdot\text{m}^3 = 1\text{ kJ}$）：
-$$h \approx 419.05 + 0.001044 \times (5000 - 101.325) = 419.05 + 5.11 = 424.16\text{ kJ/kg}$$
-* 与真实值 $422.73\text{ kJ/kg}$ 相比，相对误差仅约 $0.34\%$，精度完全符合工程计算要求。
+### 题型 1：带限位块（Stops）的活塞-汽缸两阶段加热问题
+* **已知条件**：$m = 2\text{ kg}$ 水，初态 $T_1 = 20^\circ\text{C}, P_1 = 5\text{ bar} = 500\text{ kPa}$。加热使活塞上升，在 $V_2 = 0.6\text{ m}^3$ 处碰到限位块；继续加热至成为干饱和蒸汽（状态 3）[cite: 1]。求：(a) 终态压力 $P_3$；(b) 全过程功 $W$ 与热量 $Q$[cite: 1]。
+* **标准解答步骤**：
+  1. **确定初态 1**：
+     查 $20^\circ\text{C}$ 饱和表，$P_{\text{sat}} = 2.339\text{ kPa} < 500\text{ kPa} \implies$ **压缩液体**。
+     $$v_1 \approx v_f(20^\circ\text{C}) = 0.001002\text{ m}^3/\text{kg} \implies V_1 = m v_1 = 0.002\text{ m}^3$$
+     $$u_1 \approx u_f(20^\circ\text{C}) = 83.9\text{ kJ/kg}$$
+  2. **拆解过程 $1 \to 2 \to 3$**：
+     * $1 \to 2$（碰限位块前）：**定压膨胀**，$P_2 = P_1 = 500\text{ kPa}$，$V_2 = 0.6\text{ m}^3$[cite: 1]。
+     * $2 \to 3$（碰限位块后）：**定容升温升压**，$V_3 = V_2 = 0.6\text{ m}^3$[cite: 1]。
+  3. **确定终态 3 并求 $P_3$**：
+     $$v_3 = \frac{V_3}{m} = \frac{0.6}{2} = 0.3\text{ m}^3/\text{kg}$$
+     终态为饱和蒸汽 $\implies v_g(P_3) = v_3 = 0.3\text{ m}^3/\text{kg}$[cite: 1]。
+     查压力饱和表（在 $600\text{ kPa}$ 与 $700\text{ kPa}$ 之间线性插值）：
+     $$P_3 \approx 636.4\text{ kPa} = \mathbf{6.36\text{ bar}}, \quad u_3 = u_g(P_3) \approx \mathbf{2568.6\text{ kJ/kg}}$$
+  4. **计算总功 $W$ 与总热量 $Q$**：
+     $$W = W_{1\to2} + W_{2\to3} = P_1(V_2 - V_1) + 0 = 500 \times (0.6 - 0.002) = \mathbf{299\text{ kJ}}$$
+     $$Q = \Delta U + W = m(u_3 - u_1) + W = 2 \times (2568.6 - 83.9) + 299 = \mathbf{5268.4\text{ kJ}}$$
+
+---
+
+### 题型 2：绝热定压搅拌（Mixer）相变问题
+* **已知条件**：绝热汽缸含 $m = 1\text{ kg}$ 水蒸气，初态 $P_1 = 0.4\text{ MPa} = 400\text{ kPa}, V_1 = 20\text{ L} = 0.02\text{ m}^3$。搅拌器输入轴功，保持压力恒定，直至达到干饱和蒸汽（状态 2）[cite: 2]。求：(a) $P-v$ 图；(b) $\Delta u$ 与 $\Delta h$；(c) 所有功的交互量[cite: 2]。
+* **标准解答步骤**：
+  1. **确定初态 1**：
+     $$v_1 = \frac{V_1}{m} = 0.02\text{ m}^3/\text{kg}$$
+     查 $0.4\text{ MPa}$ 饱和表：$v_f = 0.001084,\ v_g = 0.46242,\ u_f = 604.22,\ u_g = 2553.1,\ h_f = 604.66,\ h_g = 2738.1$。
+     因 $v_f < v_1 < v_g \implies$ **湿蒸汽两相区**。
+     $$x_1 = \frac{v_1 - v_f}{v_g - v_f} = \frac{0.02 - 0.001084}{0.46242 - 0.001084} \approx 0.0410$$
+     $$u_1 = u_f + x_1(u_g - u_f) = 684.12\text{ kJ/kg}$$
+     $$h_1 = h_f + x_1(h_g - h_f) = 692.13\text{ kJ/kg}$$
+  2. **确定终态 2 并求 $\Delta u, \Delta h$**：
+     定压至饱和蒸汽（$P_2 = 0.4\text{ MPa}, x_2 = 1$）[cite: 2]：
+     $$v_2 = v_g = 0.46242\text{ m}^3/\text{kg},\quad u_2 = u_g = 2553.1\text{ kJ/kg},\quad h_2 = h_g = 2738.1\text{ kJ/kg}$$
+     $$\Delta u = u_2 - u_1 = 2553.1 - 684.12 = \mathbf{1869.0\text{ kJ/kg}}$$
+     $$\Delta h = h_2 - h_1 = 2738.1 - 692.13 = \mathbf{2046.0\text{ kJ/kg}}$$
+  3. **计算各项功交互（Work Interactions）**：
+     * **边界膨胀功（系统对外输出）**：
+       $$W_b = m P (v_2 - v_1) = 1 \times 400 \times (0.46242 - 0.02) = \mathbf{+177.0\text{ kJ}}$$
+     * **搅拌轴功（外界对系统输入）**：
+       由绝热条件 $Q = 0$ 及第一定律 $0 - (W_b - W_{\text{mixer,in}}) = m\Delta u$：
+       $$W_{\text{mixer,in}} = m\Delta u + W_b = m\Delta h = \mathbf{2046.0\text{ kJ}} \quad (\text{或记为 } W_{\text{mixer}} = -2046.0\text{ kJ})$$
+     * **净功**：
+       $$W_{\text{net}} = W_b - W_{\text{mixer,in}} = 177.0 - 2046.0 = \mathbf{-1869.0\text{ kJ}}$$
