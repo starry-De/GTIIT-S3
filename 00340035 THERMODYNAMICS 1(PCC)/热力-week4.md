@@ -1,0 +1,227 @@
+# 工程热力学：理想气体状态方程与热力过程复习指南
+
+---
+
+## 1. 理想气体状态方程与基本假定
+
+### 1.1 理想气体的微观本质与宏观特性
+理想气体（Ideal Gas）是工程热力学中为了简化真实流体计算而构建的**假想工质模型**[cite: 4]：
+* **微观两大简化假定**：
+  1. **分子质点化**：分子自身不占体积，整个容器空间均为分子的自由活动容积。
+  2. **分子间无作用力**：分子间既无引力也无斥力，相互作用势能恒为零；分子间仅发生完全弹性碰撞，不产生机械能损耗。
+* **宏观三大热力学红利**：
+  1. **严格遵循状态方程**：压缩因子 $Z = \frac{pv}{RT} \equiv 1$ 全域恒成立[cite: 2, 4]。
+  2. **内能与焓是纯温度函数**：$u = u(T)$[cite: 5]，$h = h(T)$[cite: 6]，系统能量状态只取决于温度高低，与压力、体积无关。
+  3. **永不发生相变**：无论温度降至多低、压力压缩至多高，理想气体永远不会冷凝液化。
+
+### 1.2 状态方程的四种表述形式
+状态方程是关联压力 $p$、比体积 $v$ 与温度 $T$ 的状态函数[cite: 2]：
+* **比体积形式**：$pv = RT$[cite: 2]
+* **总质量形式**：$pV = mRT$[cite: 3]
+* **摩尔比容形式**：$p\bar{v} = \bar{R}T$（其中 $\bar{v}$ 为摩尔体积 $[m^3/\text{mol}]$）[cite: 3]
+* **总摩尔数形式**：$pV = n\bar{R}T$[cite: 3]
+* **定质量状态变换关系**：$\frac{p_1 V_1}{T_1} = \frac{p_2 V_2}{T_2}$[cite: 3]
+
+### 1.3 气体常数辨析与物性参数
+* **通用气体常数（Universal Gas Constant, $\bar{R}$）**：对所有理想气体严格通用[cite: 2]。
+  $$\bar{R} = 8.314\ \text{kJ}/(\text{kmol}\cdot\text{K}) = 8.314\ \text{J}/(\text{mol}\cdot\text{K})$$[cite: 2]
+* **比气体常数（Specific Gas Constant, $R$）**：每种气体的专属常数，与分子摩尔质量 $M$ 挂钩[cite: 2]：
+  $$R = \frac{\bar{R}}{M}\quad [\text{kJ}/(\text{kg}\cdot\text{K})]$$[cite: 2]
+* **常见工质基准物性表**[cite: 3]：
+  | 工质名称 | 分子式 | 摩尔质量 $M\ [\text{kg/kmol}]$[cite: 3] | 气体常数 $R\ [\text{kJ}/(\text{kg}\cdot\text{K})]$[cite: 3] | 比热比 $k$（常温）[cite: 8] |
+  | :--- | :---: | :---: | :---: | :---: |
+  | **空气 (Air)** | 混合物 | $28.97$[cite: 3] | $0.2870$[cite: 3] | $1.40$[cite: 8] |
+  | **氮气 (Nitrogen)** | $\text{N}_2$ | $28.00$[cite: 3] | $0.2968$[cite: 3] | $1.40$[cite: 8] |
+  | **氧气 (Oxygen)** | $\text{O}_2$ | $32.00$ | $0.2598$ | $1.40$[cite: 8] |
+  | **氦气 (Helium)** | $\text{He}$ | $4.00$[cite: 3] | $2.0769$[cite: 3] | $1.67$[cite: 8] |
+  | **氩气 (Argon)** | $\text{Ar}$ | $40.00$[cite: 3] | $0.2081$[cite: 3] | $1.67$[cite: 8] |
+
+### 1.4 适用边界与压缩因子 $Z$
+* **压缩因子定义**：$Z = \frac{pv}{RT}$，反映实际流体偏离理想气体的程度[cite: 4]。
+* **理想气体适用区**：高温、低压、低密度条件（分子间距极大，分子引力与自身体积可忽略）[cite: 4]。空气、$\text{O}_2$、$\text{N}_2$、$\text{H}_2$、$\text{He}$、$\text{CO}_2$ 在常温常压下相对误差 $<1\%$，可视为理想气体[cite: 4]。
+* **不可使用理想气体区**：高密度、高压、近饱和态气体（如蒸汽动力厂中的**水蒸气**、制冷循环中的**制冷剂蒸气**），分子引力极强且临近相变，必须使用**物性表（Property Tables）**查询[cite: 4]。
+
+---
+
+## 2. 热力学量纲与单位自洽准则
+
+### 2.1 推荐工程国际制体系（“$\text{kJ} - \text{kPa} - \text{m}^3 - \text{kg}$”）
+工程计算中，最不易出错的配对关系是：
+$$1\ \text{kPa} \times 1\ \text{m}^3 = (10^3\ \text{N}/\text{m}^2) \times 1\ \text{m}^3 = 10^3\ \text{N}\cdot\text{m} = 10^3\ \text{J} = \mathbf{1\ \text{kJ}}$$
+* 只要压力采用 $\text{kPa}$、体积采用 $\text{m}^3$，求得的功 $W$、换热量 $Q$、焓变 $\Delta H$、内能变 $\Delta U$ 的单位将**自动统一为 $\text{kJ}$**，无需二次乘除 $10^3$。
+
+### 2.2 核心物理量换算清单
+* **压强换算**：
+  * $1\ \text{MPa} = 1000\ \text{kPa} = 10^6\ \text{Pa}$
+  * $1\ \text{bar} = 100\ \text{kPa} = 10^5\ \text{Pa}$
+  * $1\ \text{atm} \approx 101.325\ \text{kPa}$
+  * **压力性质**：状态方程代入的必须是**绝对压力（Absolute Pressure）**：
+    $$p_{\text{abs}} = p_{\text{gauge}} + p_{\text{atm}}$$
+* **体积与面积换算**：
+  * $1\ \text{m}^3 = 1000\ \text{L} \implies 1\ \text{L} = 10^{-3}\ \text{m}^3$
+  * $1\ \text{cm}^2 = 10^{-4}\ \text{m}^2$
+  * $1\ \text{cm}^3 = 10^{-6}\ \text{m}^3$
+* **温度换算**：
+  * 状态方程代入的必须是**热力学绝对温度**：$T(\text{K}) = T(^\circ\text{C}) + 273.15$[cite: 2]
+  * 温差计算时绝对温差与摄氏温差数值恒等：$\Delta T(\text{K}) \equiv \Delta T(^\circ\text{C})$
+
+---
+
+## 3. 内能、焓与比热容（$c_p, c_v, k$）
+
+### 3.1 物理图像与定义
+* **内能 $U$（纯内部能量）**：
+  * 包含微观分子平动、转动与振动动能[cite: 8]。
+  * 因为理想气体无分子势能，所以内能只是温度的单值函数：$u = u(T)$[cite: 5]。
+  * **定容比热容 $c_v$**：气体在定容密闭容器中吸热升温，不做膨胀功（$W=0$），输入的热量 $100\%$ 用于增加系统内能（$Q=\Delta U$）[cite: 5, 9]。定义为：
+    $$c_v(T) \equiv \left(\frac{\partial u}{\partial T}\right)_v = \frac{du}{dT} \implies du = c_v(T)dT$$[cite: 5]
+* **焓 $H$（内能 + 挤占环境空间储备能）**：
+  * 定义式：$H = U + pV \implies h = u + pv$[cite: 7]。
+  * 理想气体中 $pv = RT$[cite: 2, 7]，故 $h(T) = u(T) + RT = h(T)$ 也是纯温度的单值函数[cite: 6, 7]。
+  * **定压比热容 $c_p$**：气体在恒压活塞中吸热升温，由于对外膨胀做功（$W=p\Delta V$），输入的热量被一分为二：一部分增加内能，另一部分用于排开外界介质做功（$Q = \Delta U + p\Delta V = \Delta H$）[cite: 10]。定义为：
+    $$c_p(T) \equiv \left(\frac{\partial h}{\partial T}\right)_p = \frac{dh}{dT} \implies dh = c_p(T)dT$$[cite: 6]
+
+### 3.2 理想气体的降维打击（通用性原理）
+初学最易混淆的概念：“定容过程才能用 $c_v$，定压过程才能用 $c_p$？”
+* **结论**：**这是错误的**。对于理想气体，在**任何热力学过程**（包括等温、绝热、多变、甚至非准静态不可逆过程）中：
+  $$\Delta U = m \int_{T_1}^{T_2} c_v(T)dT \xrightarrow{c_v\text{为常数}} mc_v(T_2 - T_1)$$[cite: 5, 8, 9]
+  $$\Delta H = m \int_{T_1}^{T_2} c_p(T)dT \xrightarrow{c_p\text{为常数}} mc_p(T_2 - T_1)$$[cite: 6, 8, 10]
+* **原因**：$U$ 和 $H$ 是状态量，理想气体全微分中对体积和压力的偏导项恒为 0（$\left(\frac{\partial u}{\partial v}\right)_T = 0$, $\left(\frac{\partial h}{\partial p}\right)_T = 0$）[cite: 5, 6]，“定容”与“定压”只是给其数学导数命名的历史标签。
+
+### 3.3 迈耶公式（Mayer's Relation）
+对 $h(T) = u(T) + RT$ 两边求导[cite: 7]：
+$$\frac{dh}{dT} = \frac{du}{dT} + R \implies \mathbf{c_p(T) - c_v(T) = R}$$[cite: 7]
+* **物理含义**：$R$ 的本质就是工质在恒压升温 $1\text{ K}$ 时，比体积对外膨胀排开外界所消耗的功[cite: 7, 10]。$c_p$ 必然大于 $c_v$，差值正好等于膨胀功常数 $R$[cite: 7]。
+
+### 3.4 比热比 $k$ 与分量换算
+* **比热比（绝热指数）**：$k(T) \equiv \frac{c_p(T)}{c_v(T)} > 1$[cite: 7]
+* **核心变形公式**：
+  $$c_v = \frac{R}{k - 1}$$[cite: 7]
+  $$c_p = \frac{kR}{k - 1}$$[cite: 7]
+
+### 3.5 分子自由度与经典取值模型
+根据经典统计物理能量均分定理[cite: 8]：
+* **单原子分子（如 $\text{He}, \text{Ar}$）**：仅有 3 个平动自由度[cite: 8]。
+  $$k = \frac{5}{3} \approx 1.67, \quad c_v = \frac{3}{2}R, \quad c_p = \frac{5}{2}R$$[cite: 8]
+* **双原子分子（如 空气, $\text{O}_2, \text{N}_2, \text{H}_2$）**：3 个平动 + 2 个轴向转动自由度[cite: 8]。
+  $$k = \frac{7}{5} = 1.40, \quad c_v = \frac{5}{2}R, \quad c_p = \frac{7}{2}R$$[cite: 8]
+
+---
+
+## 4. 准静态热力过程与多变过程公式总览
+
+> **基础定律体系**：
+> * 准静态容积变化功：$W = \int_1^2 p \, dV$[cite: 9]
+> * 闭口系统能量方程（第一定律）：$Q = \Delta U + W$[cite: 9, 10, 16]
+
+### 4.1 典型热力过程速查表
+
+| 过程类型 | 多变指数 $n$[cite: 14] | 状态参数关联式 | 过程膨胀功 $W$ | 过程换热量 $Q$ | 内能与焓变量 $\Delta U, \Delta H$ |
+| :--- | :---: | :--- | :--- | :--- | :--- |
+| **定容过程**<br>(Isochoric)[cite: 9] | $n = \pm\infty$[cite: 14] | $\frac{p_1}{T_1} = \frac{p_2}{T_2}$[cite: 3]<br>$V = \text{const}$[cite: 9] | $W = 0$[cite: 9] | $Q = \Delta U$<br>$= mc_v(T_2 - T_1)$[cite: 9] | $\Delta U = mc_v(T_2 - T_1)$[cite: 9]<br>$\Delta H = mc_p(T_2 - T_1)$[cite: 8] |
+| **定压过程**<br>(Isobaric)[cite: 10] | $n = 0$[cite: 14] | $\frac{V_1}{T_1} = \frac{V_2}{T_2}$[cite: 3]<br>$p = \text{const}$[cite: 10] | $W = p(V_2 - V_1)$<br>$= mR(T_2 - T_1)$[cite: 10] | $Q = \Delta H$<br>$= mc_p(T_2 - T_1)$[cite: 10] | $\Delta U = mc_v(T_2 - T_1)$[cite: 8, 10]<br>$\Delta H = mc_p(T_2 - T_1)$[cite: 10] |
+| **定温过程**<br>(Isothermal)[cite: 11] | $n = 1$[cite: 14] | $p_1 V_1 = p_2 V_2$[cite: 11]<br>$T = \text{const}$[cite: 11] | $W = mRT \ln\frac{V_2}{V_1}$<br>$= p_1 V_1 \ln\frac{p_1}{p_2}$[cite: 11] | $Q = W$<br>$= mRT \ln\frac{V_2}{V_1}$[cite: 11] | $\Delta U = 0$[cite: 11]<br>$\Delta H = 0$[cite: 11] |
+| **准静态绝热**<br>(Adiabatic)[cite: 12] | $n = k$[cite: 14] | $pV^k = \text{const}$[cite: 13]<br>$TV^{k-1} = \text{const}$[cite: 13]<br>$\frac{T_2}{T_1} = \left(\frac{p_2}{p_1}\right)^{\frac{k-1}{k}}$[cite: 13] | $W = -\Delta U$<br>$= mc_v(T_1 - T_2)$<br>$= \frac{p_1 V_1 - p_2 V_2}{k - 1}$[cite: 13] | $Q = 0$[cite: 12] | $\Delta U = -W$[cite: 13]<br>$\Delta H = mc_p(T_2 - T_1)$[cite: 8] |
+| **多变过程**<br>(Polytropic)[cite: 14] | 任意 $n$<br>($1 < n < k$)[cite: 14] | $pV^n = \text{const}$[cite: 14, 15]<br>$\frac{T_2}{T_1} = \left(\frac{p_2}{p_1}\right)^{\frac{n-1}{n}}$[cite: 16]<br>$\frac{T_2}{T_1} = \left(\frac{V_1}{V_2}\right)^{n-1}$[cite: 16] | $W = \frac{p_2 V_2 - p_1 V_1}{1 - n}$<br>$= \frac{mR(T_2 - T_1)}{1 - n}$ ($n \ne 1$)[cite: 15, 16] | $Q = mc_v\left(\frac{n - k}{n - 1}\right)(T_2 - T_1)$<br>$= m c_n (T_2 - T_1)$[cite: 16] | $\Delta U = mc_v(T_2 - T_1)$[cite: 8, 16]<br>$\Delta H = mc_p(T_2 - T_1)$[cite: 8] |
+
+### 4.2 多变过程的重要特性
+* **通用做功公式普适性**：$W = \frac{p_2 V_2 - p_1 V_1}{1 - n}$ 不仅适用于理想气体，**适用于满足 $pv^n = \text{const}$ 的任何可压缩流体（包括实际气体与液体）**[cite: 15]。
+* **多变比热容 $c_n$**：
+  $$c_n = c_v \left(\frac{n - k}{n - 1}\right)$$[cite: 16]
+  * 当 $1 < n < k$（实际绝大多数压缩/膨胀过程）时，$c_n < 0$：气体在膨胀对外做功的同时伴随放热[cite: 14]。
+
+---
+
+## 5. 准静态 vs 非准静态过程与做功机制
+
+### 5.1 过程性质判据
+* **准静态过程（Quasi-Static Process）**：过程进行的极其缓慢，使得系统在任意微元时刻都无限接近于热力学平衡态，内部压强处处均匀，驱动力与阻力仅相差一阶微分极小量（$p_{\text{gas}} \approx p_{\text{ext}} \pm dp$）。此时容积变化功满足 $W = \int p dV$[cite: 9]。
+* **非准静态过程（Non-Quasi-Static Process）**：驱动力与阻力存在**有限大压差（Finite Pressure Difference）**。气体内产生强烈的压力波、不可逆涡流、湍流耗散与激波，系统内部无法定义均匀的压力与温度分布。
+
+### 5.2 非准静态绝热膨胀的能量耗散与功核算
+* **外界功仅由外部阻力决定**：在非平衡剧烈膨胀中，不能用内部气体状态对 $p dV$ 积分，工质对外做的净功由克服边界外部总阻力决定：
+  $$W = \int p_{\text{ext}} dV = p_{\text{ext}} \Delta V$$
+* **“能量浪费”的真相（可用能损失 vs 机械能耗散）**：
+  * 在非平衡膨胀初段，有限大压差将能量转化为气体和活塞的**宏观动能**以及内部湍流；
+  * 当活塞撞上限位挡块静止后，震荡与流体湍流通过分子黏性摩擦**完全耗散，重新转化回分子的杂乱热运动（内能）**；
+  * **结论**：能量守恒定律 $W = -\Delta U$ 依然严格成立[cite: 13]，所谓的“浪费”是**做功能力的品位降低（熵增）**，而**能量总量守恒**。
+* **绝热做功公式的泛用性**：
+  课件中给出的绝热做功代数式：
+  $$W = -\Delta U = m c_v (T_1 - T_2) = \frac{p_1 V_1 - p_2 V_2}{k - 1}$$[cite: 13]
+  **不仅适用于准静态过程，对非准静态绝热过程同样严格成立（Not quasi-static）**[cite: 13]，因为该式仅仅是由理想气体内能定义和初终态状态方程导出的代数恒等式[cite: 3, 7, 13]。
+
+---
+
+## 6. 综合代表性例题精析
+
+### 6.1 典型题目（限位挡块绝热活塞膨胀问题）
+> **题目场景**：
+> 一个带绝热层的立式气缸（Insulated cylinder）[cite: 17]，被一个无摩擦、质量为 $m_p = 500\ \text{kg}$、横截面积为 $A = 100\ \text{cm}^2$ 的加重活塞封闭[cite: 17]。
+> 缸内含有处于初态 $p_1 = 1\ \text{MPa}$、$T_1 = 300^\circ\text{C}$ 的空气（视作理想气体，$k = 1.4, R = 0.287\ \text{kJ}/(\text{kg}\cdot\text{K})$）[cite: 3, 8, 17]。
+> 活塞初始被下限位销钉（Stop）卡住[cite: 17]。外界环境为 $p_0 = 100\ \text{kPa}, T_0 = 30^\circ\text{C}$ 的大气[cite: 17]。
+> 现突然拔出限位销钉，活塞剧烈向上冲起 $\Delta z = 20\ \text{cm}$，直至撞到上限位挡块被阻挡静止[cite: 17]。系统重新平衡后，测得空气最终压力为 $p_2 = 700\ \text{kPa}$[cite: 17]。
+>
+> **求解目标**：
+> (a) 该过程是否为准静态过程？[cite: 17]
+> (b) 求空气对外所做的功 $W$（单位 $\text{kJ}$）[cite: 17]。
+> (c) 求气缸内空气的质量 $m$ 以及最终体积 $V_2$[cite: 17]。
+
+---
+
+### 6.2 步进求解与物理分析
+
+#### (a) 判定过程性质
+1. 计算外部平衡活塞所需的等效外压 $p_{\text{ext}}$：
+   $$A = 100\ \text{cm}^2 = 100 \times 10^{-4}\ \text{m}^2 = 0.01\ \text{m}^2$$[cite: 17]
+   活塞自重在底面形成的压力为：
+   $$p_{\text{piston}} = \frac{m_p g}{A} = \frac{500\ \text{kg} \times 9.8\ \text{m/s}^2}{0.01\ \text{m}^2} = 4.9 \times 10^5\ \text{Pa} = 490\ \text{kPa}$$
+   外界总阻力压强：
+   $$p_{\text{ext}} = p_0 + p_{\text{piston}} = 100\ \text{kPa} + 490\ \text{kPa} = 590\ \text{kPa}$$
+2. 对比缸内初压：拔开销钉瞬间，缸内空气压力 $p_1 = 1000\ \text{kPa}$[cite: 17]，与外部阻力之间存在有限大压差：
+   $$\Delta p = p_1 - p_{\text{ext}} = 1000\ \text{kPa} - 590\ \text{kPa} = 410\ \text{kPa} \gg 0$$
+3. **结论**：活塞在巨大的非平衡合力下加速飞起，内部气体剧烈扰动并不处于平衡态，**该过程绝非准静态过程（Not quasi-static）**。
+
+#### (b) 计算空气对外的净做功量 $W$
+因为终态活塞被上限位挡块阻挡静止，初末态活塞动能变化量为零，空气膨胀排开外界所做的净功等于**顶开外界大气的功**加上**抬升活塞重力势能的功**：
+1. 膨胀体积增量：
+   $$\Delta V = A \cdot \Delta z = 0.01\ \text{m}^2 \times 0.2\ \text{m} = 0.002\ \text{m}^3$$[cite: 17]
+2. 顶开大气做功：
+   $$W_{\text{atm}} = p_0 \Delta V = 100\ \text{kPa} \times 0.002\ \text{m}^3 = 0.2\ \text{kJ}$$
+3. 克服重力势能做功：
+   $$W_{\text{gravity}} = m_p g \Delta z = 500\ \text{kg} \times 9.8\ \text{m/s}^2 \times 0.2\ \text{m} = 980\ \text{J} = 0.98\ \text{kJ}$$
+4. 空气对外界的总输出功：
+   $$W = W_{\text{atm}} + W_{\text{gravity}} = 0.2\ \text{kJ} + 0.98\ \text{kJ} = \mathbf{1.18\ \text{kJ}}$$
+   *(注：等价于直接使用恒定外压公式 $W = p_{\text{ext}} \Delta V = 590\ \text{kPa} \times 0.002\ \text{m}^3 = 1.18\ \text{kJ}$)*
+
+#### (c) 联立求解气体质量 $m$ 与最终体积 $V_2$
+气缸绝热（$Q = 0$）[cite: 12, 17]，根据第一定律：
+$$W = -\Delta U = m c_v (T_1 - T_2) = \frac{p_1 V_1 - p_2 V_2}{k - 1}$$[cite: 13]
+已知：
+* $p_1 = 1000\ \text{kPa}$[cite: 17]
+* $p_2 = 700\ \text{kPa}$[cite: 17]
+* $k = 1.4$[cite: 8, 17]
+* $W = 1.18\ \text{kJ}$
+* 体积关系：$V_2 = V_1 + \Delta V = V_1 + 0.002\ \text{m}^3$[cite: 17]
+
+1. **代入解初态容积 $V_1$**：
+   $$1.18 = \frac{1000 V_1 - 700(V_1 + 0.002)}{1.4 - 1}$$
+   $$1.18 = \frac{300 V_1 - 1.4}{0.4}$$
+   $$0.472 = 300 V_1 - 1.4 \implies 300 V_1 = 1.872$$
+   $$V_1 = \frac{1.872}{300} = 0.00624\ \text{m}^3$$
+2. **计算最终体积 $V_2$**：
+   $$V_2 = V_1 + \Delta V = 0.00624\ \text{m}^3 + 0.002\ \text{m}^3 = \mathbf{0.00824\ \text{m}^3} \quad (8.24\ \text{L})$$
+3. **计算气体质量 $m$**：
+   初温换算为绝对温度：$T_1 = 300 + 273.15 = 573.15\ \text{K}$[cite: 2, 17]。
+   代入初态状态方程：
+   $$p_1 V_1 = m R T_1 \implies m = \frac{p_1 V_1}{R T_1}$$[cite: 3]
+   $$m = \frac{1000\ \text{kPa} \times 0.00624\ \text{m}^3}{0.2870\ \text{kJ}/(\text{kg}\cdot\text{K}) \times 573.15\ \text{K}} = \frac{6.24}{164.494} \approx \mathbf{0.0379\ \text{kg}} \quad (37.9\ \text{g})$$
+
+---
+
+### 6.3 题型做题范式与避坑关键点
+1. **绝热 $\neq$ 恒熵（不能乱用等熵幂次关系）**：
+   本题是绝热过程（$Q=0$），但因为**不是准静态**，存在强烈的机械耗散与不可逆性，**绝对不能套用 $p_1 V_1^k = p_2 V_2^k$ 或 $\frac{T_2}{T_1} = (p_2/p_1)^{\frac{k-1}{k}}$**[cite: 13]！如果套用等熵关系解题，会导致整个计算全盘崩溃。
+2. **代数式 $W = \frac{p_1 V_1 - p_2 V_2}{k-1}$ 的独立性**：
+   此公式仅仅依靠 $W = -\Delta U$ 和状态方程导出，不含路径可逆假定，是破解非准静态绝热问题最核心的钥匙[cite: 13]。
+3. **未直接给出 $k$ 时的默认常识**：
+   如果题干工质为空气且未明示 $k$，应立刻想到双原子分子基准 $k = 1.4$ 以及对应 $c_v = \frac{R}{k-1} = 0.718\ \text{kJ}/(\text{kg}\cdot\text{K})$[cite: 7, 8]。
